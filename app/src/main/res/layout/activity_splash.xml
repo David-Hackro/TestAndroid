@@ -8,34 +8,5 @@
 
 
 
-    <ImageView
-        android:id="@+id/IconSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher" />
 
-
-
-    <ProgressBar android:id="@+id/ProgressSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:layout_below="@+id/IconSplash"
-        android:layout_centerHorizontal="true">
-    </ProgressBar>
-
-    <TextView
-        android:id="@+id/MensajeSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Cargando Datos"
-        android:visibility="gone"
-        android:textSize="20dp"
-        android:textColor="@color/secundaryText"
-        android:layout_below="@+id/ProgressSplash"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

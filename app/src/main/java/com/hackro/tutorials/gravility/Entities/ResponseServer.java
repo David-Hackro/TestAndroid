@@ -9,6 +9,7 @@ import com.hackro.tutorials.gravility.Entities.DTO.Feed;
  * Created by david on 13/04/16.
  */
 public class ResponseServer {
+
     @SerializedName("feed")
     @Expose
     private Feed feed;
@@ -27,4 +28,5 @@ public class ResponseServer {
     public void setFeed(Feed feed) {
         this.feed = feed;
     }
+
 }

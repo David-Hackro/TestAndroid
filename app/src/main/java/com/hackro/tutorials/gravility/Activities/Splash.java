@@ -1,30 +1,23 @@
 package com.hackro.tutorials.gravility.Activities;
 
+import android.app.ProgressDialog;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hackro.tutorials.gravility.Entities.ResponseServer;
-import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.R;
+import com.hackro.tutorials.gravility.Services.Services;
 
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import io.realm.RealmConfiguration;
 
 public class Splash extends AppCompatActivity {
 
-    private ProgressBar ProgressSplash;
     private TextView MensajeSplash;
-    protected IRepoData services;
-    protected Retrofit retrofit;
+    private ProgressDialog progress;
+    private Services service;
 
 
     @Override
@@ -37,27 +30,40 @@ public class Splash extends AppCompatActivity {
         }
 
         getSupportActionBar().hide();
-        ProgressSplash = (ProgressBar) findViewById(R.id.ProgressSplash);
-        MensajeSplash = (TextView) findViewById(R.id.MensajeSplash);
-        MensajeSplash.setVisibility(View.VISIBLE);
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://itunes.apple.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        services = retrofit.create(IRepoData.class);
+        service = new Services();
+        progress = ProgressDialog.show(Splash.this, null, null, true);
+        progress.setContentView(R.layout.elemento_progress_dialog);
+        progress.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
-        Call<ResponseServer> call = services.getAlldata();
-        try {
-            Response<ResponseServer> tasks = call.execute();
-            Log.e("ddd",tasks.body().getFeed().getEntry().getCategory().getAttributes().getLabel());
-
-            Log.e("-----------",tasks.body().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+            new MyAsyncClass().execute();
 
     }
+
+    private class MyAsyncClass extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progress.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
+            service.setRealmConfiguration(realmConfiguration);
+            service.getAllData();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+            progress.dismiss();
+        }
+    }
+
+
 }
