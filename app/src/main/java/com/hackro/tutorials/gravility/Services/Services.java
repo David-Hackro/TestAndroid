@@ -1,9 +1,12 @@
 package com.hackro.tutorials.gravility.Services;
 
+import android.util.Log;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hackro.tutorials.gravility.Entities.DTO.Entry;
 import com.hackro.tutorials.gravility.Entities.ResponseServer;
 import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.Interfaces.IService;
@@ -48,7 +51,6 @@ public class Services implements IService {
         services = retrofit.create(IRepoData.class);
         //repositoryPhotos.readPostAll();
 
-
     }
 
 
@@ -57,6 +59,11 @@ public class Services implements IService {
         try {
             Call<ResponseServer> call = services.getAlldata();
             Response<ResponseServer> tasks = call.execute();
+
+
+            for (Entry temp:tasks.body().getFeed().getEntry()) {
+                Log.e("Apps: ",temp.getCategory().getAttributes().getLabel());
+            }
             return true;
         } catch (IOException e) {
             return false;

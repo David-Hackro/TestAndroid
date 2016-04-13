@@ -18,6 +18,7 @@ public class Splash extends AppCompatActivity {
     private TextView MensajeSplash;
     private ProgressDialog progress;
     private Services service;
+    private RealmConfiguration realmConfiguration;
 
 
     @Override
@@ -45,13 +46,12 @@ public class Splash extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             progress.show();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
+            realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
             service.setRealmConfiguration(realmConfiguration);
             service.getAllData();
             return null;
