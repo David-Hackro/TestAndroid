@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
-
 import com.hackro.tutorials.gravility.R;
 import com.hackro.tutorials.gravility.Services.Services;
 
@@ -15,7 +13,6 @@ import io.realm.RealmConfiguration;
 
 public class Splash extends AppCompatActivity {
 
-    private TextView MensajeSplash;
     private ProgressDialog progress;
     private Services service;
     private RealmConfiguration realmConfiguration;
@@ -32,8 +29,9 @@ public class Splash extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        service = new Services();
-        progress = ProgressDialog.show(Splash.this, null, null, true);
+        service = new Services(Splash.this);
+
+        progress = ProgressDialog.show(this, null, null, true);
         progress.setContentView(R.layout.elemento_progress_dialog);
         progress.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -52,6 +50,7 @@ public class Splash extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
+
             service.setRealmConfiguration(realmConfiguration);
             service.getAllData();
             return null;

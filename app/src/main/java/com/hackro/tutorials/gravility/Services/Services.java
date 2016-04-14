@@ -1,18 +1,18 @@
 package com.hackro.tutorials.gravility.Services;
 
-import android.util.Log;
+import android.content.Context;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hackro.tutorials.gravility.DataBase.MethodsDataBase;
+import com.hackro.tutorials.gravility.Entities.Aplicacion;
+import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.Entities.DTO.Entry;
-import com.hackro.tutorials.gravility.Entities.DTO.Link;
-import com.hackro.tutorials.gravility.Entities.DTO.Link_;
 import com.hackro.tutorials.gravility.Entities.ResponseServer;
 import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.Interfaces.IService;
-
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.internal.IOException;
@@ -29,8 +29,11 @@ public class Services implements IService {
     private Retrofit retrofit;
     private IRepoData services;
     private RealmConfiguration realmConfiguration;
+    private MethodsDataBase methodsDataBase;
 
-    public Services() {
+    public Services(Context c) {
+
+        methodsDataBase = new MethodsDataBase(c);
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -61,58 +64,39 @@ public class Services implements IService {
         try {
             Call<ResponseServer> call = services.getAlldata();
             Response<ResponseServer> tasks = call.execute();
+
+            Aplicacion app;
+            Categoria categoria;
             for (Entry entry : tasks.body().getFeed().getEntry()) {
 
+                app = new Aplicacion();
+                categoria  = new Categoria();
 
+                app.setIdLabel(entry.getId().getLabel().toString());
+                app.setImId(entry.getId().getAttributes().getImId());
+                app.setImBundleId(entry.getId().getAttributes().getImBundleId());
+                app.setImageLabel(entry.getImImage().get(0).getLabel());
+                app.setTitle(entry.getTitle().getLabel());
+                app.setLinkHref(entry.getLink().getAttributes().getHref());
+                app.setLinkRel(entry.getLink().getAttributes().getRel());
+                app.setLinkType(entry.getLink().getAttributes().getType());
+                app.setPriceAmount(entry.getImPrice().getAttributes().getAmount());
+                app.setPriceCurrency(entry.getImPrice().getAttributes().getCurrency());
+                app.setArtistHref(entry.getImArtist().getAttributes().getHref());
+                app.setImReleaseDateLabel(entry.getImReleaseDate().getAttributes().getLabel());
+                app.setRightsLabel(entry.getRights().getLabel());
+                app.setSummaryLabel(entry.getSummary().getLabel());
 
+                categoria.setImId(entry.getCategory().getAttributes().getImId());
+                categoria.setLabel(entry.getCategory().getAttributes().getLabel());
+                categoria.setScheme( entry.getCategory().getAttributes().getScheme());
+                categoria.setTerm(entry.getCategory().getAttributes().getTerm());
 
-             /*   Log.e("getCategory ", entry.getCategory().getAttributes().getImId());
-                Log.e("getCategory ", entry.getCategory().getAttributes().getLabel());
-                Log.e("getCategory ", entry.getCategory().getAttributes().getScheme());
-                Log.e("getCategory ", entry.getCategory().getAttributes().getTerm());
-
-                Log.e("getId ", entry.getId().getLabel().toString());
-                Log.e("getId ", entry.getId().getAttributes().getImId());
-                Log.e("getId ", entry.getId().getAttributes().getImBundleId());
-                Log.e("getImImage ", entry.getImImage().get(0).getLabel());
-                Log.e("getImImage ", entry.getTitle().getLabel());
-                Log.e("getImImage ", entry.getLink().getAttributes().getHref());
-                Log.e("getImImage ", entry.getLink().getAttributes().getRel());
-                Log.e("getImImage ", entry.getLink().getAttributes().getType());
-                Log.e("getImImage ", entry.getImPrice().getAttributes().getAmount());
-                Log.e("getImImage ", entry.getImPrice().getAttributes().getCurrency());
-                Log.e("getImImage ", entry.getImArtist().getAttributes().getHref());
-                Log.e("getImImage ", entry.getImReleaseDate().getAttributes().getLabel());
-                Log.e("getImImage ", entry.getRights().getLabel());
-                Log.e("getImImage ", entry.getSummary().getLabel());
-*/
-
-
-
-
-
-
-
-
-
-
-                Log.e("getImImage ", entry.getImImage().get(0).getLabel());
-                Log.e("getImPrice ", entry.getImPrice().getAttributes().getAmount());
-                Log.e("getLink ", entry.getLink().getAttributes().getHref());
-                Log.e("getTitle ", entry.getTitle().getLabel());
-                Log.e("-----------------------","----------------------");
-                Log.e("-----------------------","----------------------");
-                Log.e("-----------------------","----------------------");
-                Log.e("-----------------------","----------------------");
-
-
-
+                methodsDataBase.InsertAplication(app);
+                methodsDataBase.InsertCategory(categoria);
             }
 
 
-            for (Entry temp : tasks.body().getFeed().getEntry()) {
-                // Log.e("Apps: ",temp.getCategory().getAttributes().getLabel());
-            }
             return true;
         } catch (IOException e) {
             return false;
