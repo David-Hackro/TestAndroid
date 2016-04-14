@@ -27,4 +27,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'io.realm:realm-android:0.87.5'
     compile 'com.android.support:design:23.3.0'
+
+    /*Agregamos las dos dependencias CardView y RecyclerView*/
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
 }

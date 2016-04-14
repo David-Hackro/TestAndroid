@@ -53,10 +53,10 @@ public class Splash extends AppCompatActivity {
 
             service = new Services(realmConfiguration);
             if(service.getAllData()){
-                startActivity(new Intent(Splash.this,MenuDrawer.class));
+                startActivity(new Intent(Splash.this,ListApps.class));
             }
             else {
-                startActivity(new Intent(Splash.this,MenuDrawer.class));
+                startActivity(new Intent(Splash.this,ListApps.class));
             }
 
             return null;

@@ -24,6 +24,7 @@ import io.realm.RealmConfiguration;
 public class MenuDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MethodsDataBase methodsDataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class MenuDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         RealmConfiguration    realmConfiguration = new RealmConfiguration.Builder(MenuDrawer.this).build();
-        MethodsDataBase methodsDataBase = new MethodsDataBase(realmConfiguration);
+        methodsDataBase = new MethodsDataBase(realmConfiguration);
 
 
 
@@ -58,11 +59,14 @@ public class MenuDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView  = (NavigationView) findViewById(R.id.nav_view);
         Menu m = navigationView .getMenu();
+
+
         SubMenu topChannelMenu = m.addSubMenu("Categorias");
 
         for(Categoria categoria : methodsDataBase.getAllCategories())
         {
             topChannelMenu.add(categoria.getLabel());
+            topChannelMenu.setHeaderTitle(categoria.getImId());
 
         }
         navigationView.setNavigationItemSelectedListener(this);
@@ -107,19 +111,8 @@ public class MenuDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

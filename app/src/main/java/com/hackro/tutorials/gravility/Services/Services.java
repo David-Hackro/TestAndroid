@@ -1,6 +1,7 @@
 package com.hackro.tutorials.gravility.Services;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -53,7 +54,6 @@ public class Services implements IService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         services = retrofit.create(IRepoData.class);
-        //repositoryPhotos.readPostAll();
 
     }
 
@@ -85,11 +85,12 @@ public class Services implements IService {
                 app.setImReleaseDateLabel(entry.getImReleaseDate().getAttributes().getLabel());
                 app.setRightsLabel(entry.getRights().getLabel());
                 app.setSummaryLabel(entry.getSummary().getLabel());
-
                 categoria.setImId(entry.getCategory().getAttributes().getImId());
                 categoria.setLabel(entry.getCategory().getAttributes().getLabel());
                 categoria.setScheme( entry.getCategory().getAttributes().getScheme());
                 categoria.setTerm(entry.getCategory().getAttributes().getTerm());
+
+              //  Log.e(entry.getCategory().getAttributes().getImId() +" | ",entry.getCategory().getAttributes().getLabel());
 
                 methodsDataBase.InsertAplication(app);
                 methodsDataBase.InsertCategory(categoria);

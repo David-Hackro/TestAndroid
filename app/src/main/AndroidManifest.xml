@@ -20,7 +20,9 @@
         <activity
             android:name=".Activities.MenuDrawer"
             android:label="@string/title_activity_menu_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.ListApps" />
+        <activity android:name=".Activities.DetailsApp"></activity>
     </application>
 
 </manifest>
