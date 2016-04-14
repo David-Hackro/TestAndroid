@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,10 +33,7 @@ public class MenuDrawer extends AppCompatActivity
 
         RealmConfiguration    realmConfiguration = new RealmConfiguration.Builder(MenuDrawer.this).build();
         MethodsDataBase methodsDataBase = new MethodsDataBase(realmConfiguration);
-        for(Categoria categoria : methodsDataBase.getAllCategories())
-        {
-            Log.e("Categoria: ",categoria.getLabel());
-        }
+
 
 
 
@@ -51,13 +49,24 @@ public class MenuDrawer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.findViewById(R.id.nav_view);
 
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView  = (NavigationView) findViewById(R.id.nav_view);
+        Menu m = navigationView .getMenu();
+        SubMenu topChannelMenu = m.addSubMenu("Categorias");
+
+        for(Categoria categoria : methodsDataBase.getAllCategories())
+        {
+            topChannelMenu.add(categoria.getLabel());
+
+        }
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
