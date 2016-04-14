@@ -21,8 +21,8 @@ import com.hackro.tutorials.gravility.R;
 
 public class DetailsApp extends AppCompatActivity {
 
-        String ImageLabel,PriceAmount,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
-    private TextView PriceApp,DescripcionApp;
+        String Title,ImageLabel,PriceAmount,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
+    private TextView PriceApp,DescripcionApp,TitleApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,12 @@ public class DetailsApp extends AppCompatActivity {
         setContentView(R.layout.activity_details_app);
         final ImageView imageView = (ImageView) findViewById(R.id.IconApp);
 
+        TitleApp =(TextView)findViewById(R.id.TitleApp);
         PriceApp = (TextView)findViewById(R.id.PriceApp);
         DescripcionApp = (TextView)findViewById(R.id.DescripcionApp);
 
+
+        Title = getIntent().getStringExtra("Title");
         ImageLabel = getIntent().getStringExtra("ImageLabel");
         PriceAmount =getIntent().getStringExtra("PriceAmount");
         SummaryLabel = getIntent().getStringExtra("SummaryLabel");
@@ -40,7 +43,7 @@ public class DetailsApp extends AppCompatActivity {
         LinkHref = getIntent().getStringExtra("LinkHref");
         RightsLabel = getIntent().getStringExtra("RightsLabel");
 
-
+        TitleApp.setText(Title);
         PriceApp.setText(PriceAmount);
         DescripcionApp.setText(SummaryLabel);
 

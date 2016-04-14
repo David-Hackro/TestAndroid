@@ -72,6 +72,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
                 Log.e("app  ", app.getTitle());
                 Intent intent = new Intent(context, DetailsApp.class);
 
+                intent.putExtra("Title",app.getTitle());
                 intent.putExtra("ImageLabel",app.getImageLabel());
                 intent.putExtra("PriceAmount",app.getPriceAmount());
                 intent.putExtra("SummaryLabel",app.getSummaryLabel());

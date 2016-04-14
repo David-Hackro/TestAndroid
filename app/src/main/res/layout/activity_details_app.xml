@@ -18,20 +18,33 @@
         android:src="@mipmap/ic_launcher"
         android:onClick="download"
         />
+
+
+    <TextView
+        android:id="@+id/TitleApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/IconApp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/Text"
+        />
     
     <TextView
         android:id="@+id/PriceApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/IconApp"
+        android:layout_below="@+id/TitleApp"
         android:layout_centerHorizontal="true"
+
         />
     <TextView
         android:id="@+id/DescripcionApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/PriceApp"
-
+        android:textStyle="italic"
+        android:textColor="@color/secundaryText"
 
         />
 
