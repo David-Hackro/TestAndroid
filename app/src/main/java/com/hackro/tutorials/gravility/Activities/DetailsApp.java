@@ -2,6 +2,7 @@ package com.hackro.tutorials.gravility.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -20,11 +22,16 @@ import com.hackro.tutorials.gravility.R;
 public class DetailsApp extends AppCompatActivity {
 
         String ImageLabel,PriceAmount,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
+    private TextView PriceApp,DescripcionApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_app);
         final ImageView imageView = (ImageView) findViewById(R.id.IconApp);
+
+        PriceApp = (TextView)findViewById(R.id.PriceApp);
+        DescripcionApp = (TextView)findViewById(R.id.DescripcionApp);
 
         ImageLabel = getIntent().getStringExtra("ImageLabel");
         PriceAmount =getIntent().getStringExtra("PriceAmount");
@@ -33,6 +40,9 @@ public class DetailsApp extends AppCompatActivity {
         LinkHref = getIntent().getStringExtra("LinkHref");
         RightsLabel = getIntent().getStringExtra("RightsLabel");
 
+
+        PriceApp.setText(PriceAmount);
+        DescripcionApp.setText(SummaryLabel);
 
 
         Glide.with(DetailsApp.this).load(getIntent().getStringExtra("ImageLabel")).asBitmap().fitCenter().into(new BitmapImageViewTarget(imageView) {
