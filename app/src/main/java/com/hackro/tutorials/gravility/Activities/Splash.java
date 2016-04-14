@@ -1,6 +1,7 @@
 package com.hackro.tutorials.gravility.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -15,21 +16,20 @@ public class Splash extends AppCompatActivity {
 
     private ProgressDialog progress;
     private Services service;
-   // private RealmConfiguration realmConfiguration;
+    private RealmConfiguration realmConfiguration;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        getSupportActionBar().hide();
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        getSupportActionBar().hide();
-
-        service = new Services(Splash.this);
 
         progress = ProgressDialog.show(this, null, null, true);
         progress.setContentView(R.layout.elemento_progress_dialog);
@@ -49,9 +49,16 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
-            service.setRealmConfiguration(realmConfiguration);
-            service.getAllData();
+            realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
+
+            service = new Services(realmConfiguration);
+            if(service.getAllData()){
+                startActivity(new Intent(Splash.this,MenuDrawer.class));
+            }
+            else {
+                startActivity(new Intent(Splash.this,MenuDrawer.class));
+            }
+
             return null;
         }
 
@@ -63,5 +70,11 @@ public class Splash extends AppCompatActivity {
         }
     }
 
+    public RealmConfiguration getRealmConfiguration() {
+        return realmConfiguration;
+    }
 
+    public void setRealmConfiguration(RealmConfiguration realmConfiguration) {
+        this.realmConfiguration = realmConfiguration;
+    }
 }

@@ -28,12 +28,11 @@ public class Services implements IService {
 
     private Retrofit retrofit;
     private IRepoData services;
-    private RealmConfiguration realmConfiguration;
     private MethodsDataBase methodsDataBase;
 
-    public Services(Context c) {
+    public Services(RealmConfiguration realmConfig) {
 
-        methodsDataBase = new MethodsDataBase(c);
+        methodsDataBase = new MethodsDataBase(realmConfig);
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -106,8 +105,4 @@ public class Services implements IService {
     }
 
 
-    public void setRealmConfiguration(RealmConfiguration realmConfiguration) {
-
-        this.realmConfiguration = realmConfiguration;
-    }
 }

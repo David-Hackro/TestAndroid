@@ -1,6 +1,7 @@
 package com.hackro.tutorials.gravility.DataBase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
 import com.hackro.tutorials.gravility.Entities.Categoria;
@@ -22,44 +23,57 @@ public class MethodsDataBase implements IMethodsDataBase {
     private Categoria category;
     private Aplicacion aplication;
 
-    public MethodsDataBase(Context c) {
-        realmConfig = new RealmConfiguration.Builder(c).build();
-        realm = Realm.getInstance(realmConfig);
+    public MethodsDataBase(RealmConfiguration realmConfiguration) {
+        //realmConfig = realmConfiguration;//= new RealmConfiguration.Builder(c).build();
+        realm = Realm.getInstance(realmConfiguration);
     }
 
     @Override
     public void InsertCategory(Categoria c) {
-        realm.beginTransaction();
-        category = realm.createObject(Categoria.class);
+        try {
+            realm.beginTransaction();
+            category = realm.createObject(Categoria.class);
 
-        category.setImId(c.getImId());
-        category.setLabel(c.getLabel());
-        category.setScheme(c.getScheme());
-        category.setTerm(c.getTerm());
+            category.setImId(c.getImId());
+            category.setLabel(c.getLabel());
+            category.setScheme(c.getScheme());
+            category.setTerm(c.getTerm());
 
-        realm.commitTransaction();
+            realm.commitTransaction();
+        }
+        catch (Exception e)
+        {
+            Log.e("Existe","");
+        }
     }
 
     @Override
     public void InsertAplication(Aplicacion app) {
-        realm.beginTransaction();
-        aplication = realm.createObject(Aplicacion.class);
 
-        aplication.setImId(app.getImId());
-        aplication.setArtistHref(app.getArtistHref());
-        aplication.setIdLabel(app.getIdLabel());
-        aplication.setImageLabel(app.getImageLabel());
-        aplication.setImBundleId(app.getImBundleId());
-        aplication.setImReleaseDateLabel(app.getImReleaseDateLabel());
-        aplication.setLinkHref(app.getLinkHref());
-        aplication.setLinkType(app.getLinkType());
-        aplication.setPriceAmount(app.getPriceAmount());
-        aplication.setPriceCurrency(app.getPriceCurrency());
-        aplication.setRightsLabel(app.getRightsLabel());
-        aplication.setTitle(app.getTitle());
-        aplication.setSummaryLabel(app.getSummaryLabel());
+        try {
+            realm.beginTransaction();
 
-        realm.commitTransaction();
+            aplication = realm.createObject(Aplicacion.class);
+
+            aplication.setImId(app.getImId());
+            aplication.setArtistHref(app.getArtistHref());
+            aplication.setIdLabel(app.getIdLabel());
+            aplication.setImageLabel(app.getImageLabel());
+            aplication.setImBundleId(app.getImBundleId());
+            aplication.setImReleaseDateLabel(app.getImReleaseDateLabel());
+            aplication.setLinkHref(app.getLinkHref());
+            aplication.setLinkType(app.getLinkType());
+            aplication.setPriceAmount(app.getPriceAmount());
+            aplication.setPriceCurrency(app.getPriceCurrency());
+            aplication.setRightsLabel(app.getRightsLabel());
+            aplication.setTitle(app.getTitle());
+            aplication.setSummaryLabel(app.getSummaryLabel());
+
+            realm.commitTransaction();
+        }catch (Exception e)
+        {
+            Log.e("Error","");
+        }
     }
 
     @Override
