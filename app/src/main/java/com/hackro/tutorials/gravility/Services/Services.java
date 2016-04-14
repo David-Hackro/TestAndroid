@@ -74,13 +74,11 @@ public class Services implements IService {
             Aplicacion app;
             Categoria categoria;
             for (Entry entry : tasks.body().getFeed().getEntry()) {
-
                 app = new Aplicacion();
                 categoria  = new Categoria();
 
                 app.setIdLabel(entry.getId().getLabel().toString());
                 app.setImId(entry.getId().getAttributes().getImId());
-                Log.e("XDXDXDXD  ",entry.getId().getAttributes().getImId());
                 app.setImBundleId(entry.getId().getAttributes().getImBundleId());
                 app.setImageLabel(entry.getImImage().get(0).getLabel());
                 app.setTitle(entry.getTitle().getLabel());
@@ -99,7 +97,6 @@ public class Services implements IService {
                 categoria.setTerm(entry.getCategory().getAttributes().getTerm());
                 apps.add(app);
                 categorias.add(categoria);
-              //  Log.e(entry.getCategory().getAttributes().getImId() +" | ",entry.getCategory().getAttributes().getLabel());
 
             }
 

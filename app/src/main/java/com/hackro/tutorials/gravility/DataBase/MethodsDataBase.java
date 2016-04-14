@@ -3,6 +3,7 @@ package com.hackro.tutorials.gravility.DataBase;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
 import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.Interfaces.IMethodsDataBase;

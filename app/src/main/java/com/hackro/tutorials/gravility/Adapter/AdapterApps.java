@@ -71,7 +71,15 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
             public void onClick(View v) {
                 Log.e("app  ", app.getTitle());
                 Intent intent = new Intent(context, DetailsApp.class);
-                intent.putExtra("title",app.getImageLabel());
+
+                intent.putExtra("ImageLabel",app.getImageLabel());
+                intent.putExtra("PriceAmount",app.getPriceAmount());
+                intent.putExtra("SummaryLabel",app.getSummaryLabel());
+                intent.putExtra("ImReleaseDateLabel",app.getImReleaseDateLabel());
+                intent.putExtra("LinkHref",app.getLinkHref());
+                intent.putExtra("RightsLabel",app.getRightsLabel());
+
+
                 context.startActivity(intent);
             }
         });
