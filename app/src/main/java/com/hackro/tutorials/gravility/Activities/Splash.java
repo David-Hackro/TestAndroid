@@ -15,7 +15,7 @@ public class Splash extends AppCompatActivity {
 
     private ProgressDialog progress;
     private Services service;
-    private RealmConfiguration realmConfiguration;
+   // private RealmConfiguration realmConfiguration;
 
 
     @Override
@@ -49,8 +49,7 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
-
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
             service.setRealmConfiguration(realmConfiguration);
             service.getAllData();
             return null;
