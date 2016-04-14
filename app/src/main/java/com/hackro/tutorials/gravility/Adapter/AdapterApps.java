@@ -71,8 +71,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
             public void onClick(View v) {
                 Log.e("app  ", app.getTitle());
                 Intent intent = new Intent(context, DetailsApp.class);
-                myJson = gson.toJson(ci);
-                intent.putExtra("App", myJson);
+                intent.putExtra("title",app.getImageLabel());
                 context.startActivity(intent);
             }
         });

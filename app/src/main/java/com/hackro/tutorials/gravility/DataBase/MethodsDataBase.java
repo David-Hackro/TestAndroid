@@ -39,11 +39,11 @@ public class MethodsDataBase implements IMethodsDataBase {
             category.setScheme(c.getScheme());
             category.setTerm(c.getTerm());
 
+        } catch (Exception e) {
+            Log.e("Existe", "");
+
+        } finally {
             realm.commitTransaction();
-        }
-        catch (Exception e)
-        {
-            Log.e("Existe","");
         }
     }
 
@@ -69,10 +69,12 @@ public class MethodsDataBase implements IMethodsDataBase {
             aplication.setTitle(app.getTitle());
             aplication.setSummaryLabel(app.getSummaryLabel());
 
+
+        } catch (Exception e) {
+            Log.e("Error", "");
+
+        } finally {
             realm.commitTransaction();
-        }catch (Exception e)
-        {
-            Log.e("Error","");
         }
     }
 

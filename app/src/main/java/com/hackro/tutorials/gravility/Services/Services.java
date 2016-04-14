@@ -14,6 +14,10 @@ import com.hackro.tutorials.gravility.Entities.DTO.Entry;
 import com.hackro.tutorials.gravility.Entities.ResponseServer;
 import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.Interfaces.IService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.internal.IOException;
@@ -64,6 +68,9 @@ public class Services implements IService {
             Call<ResponseServer> call = services.getAlldata();
             Response<ResponseServer> tasks = call.execute();
 
+            List<Aplicacion> apps = new ArrayList<Aplicacion>();
+            List<Categoria> categorias = new ArrayList<Categoria>();
+
             Aplicacion app;
             Categoria categoria;
             for (Entry entry : tasks.body().getFeed().getEntry()) {
@@ -73,6 +80,7 @@ public class Services implements IService {
 
                 app.setIdLabel(entry.getId().getLabel().toString());
                 app.setImId(entry.getId().getAttributes().getImId());
+                Log.e("XDXDXDXD  ",entry.getId().getAttributes().getImId());
                 app.setImBundleId(entry.getId().getAttributes().getImBundleId());
                 app.setImageLabel(entry.getImImage().get(0).getLabel());
                 app.setTitle(entry.getTitle().getLabel());
@@ -89,12 +97,17 @@ public class Services implements IService {
                 categoria.setLabel(entry.getCategory().getAttributes().getLabel());
                 categoria.setScheme( entry.getCategory().getAttributes().getScheme());
                 categoria.setTerm(entry.getCategory().getAttributes().getTerm());
-
+                apps.add(app);
+                categorias.add(categoria);
               //  Log.e(entry.getCategory().getAttributes().getImId() +" | ",entry.getCategory().getAttributes().getLabel());
 
-                methodsDataBase.InsertAplication(app);
-                methodsDataBase.InsertCategory(categoria);
             }
+
+            for (Aplicacion a:apps )
+            methodsDataBase.InsertAplication(a);
+
+            for (Categoria c:categorias)
+            methodsDataBase.InsertCategory(c);
 
 
             return true;

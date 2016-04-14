@@ -51,7 +51,6 @@ public class ListApps extends AppCompatActivity {
         methodsDataBase = new MethodsDataBase(realmConfiguration);
 
         List<Aplicacion> apps = methodsDataBase.getAllAplications();
-
         AdapterApps ca = new AdapterApps(apps,ListApps.this);
         recList.setAdapter(ca);
     }
