@@ -54,9 +54,11 @@ public class Splash extends AppCompatActivity {
             service = new Services(realmConfiguration);
             if(service.getAllData()){
                 startActivity(new Intent(Splash.this,ListApps.class));
+                finish();
             }
             else {
                 startActivity(new Intent(Splash.this,ListApps.class));
+                finish();
             }
 
             return null;
@@ -77,4 +79,5 @@ public class Splash extends AppCompatActivity {
     public void setRealmConfiguration(RealmConfiguration realmConfiguration) {
         this.realmConfiguration = realmConfiguration;
     }
+
 }
