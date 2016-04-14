@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface IRepoData {
 
     //@FormUrlEncoded
-    @POST("us/rss/topfreeapplications/limit=20/json")
+    @POST("us/rss/topfreeapplications/limit=30/json")
     Call<ResponseServer> getAlldata();
 
 }

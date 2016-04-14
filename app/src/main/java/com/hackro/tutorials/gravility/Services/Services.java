@@ -7,6 +7,8 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hackro.tutorials.gravility.Entities.DTO.Entry;
+import com.hackro.tutorials.gravility.Entities.DTO.Link;
+import com.hackro.tutorials.gravility.Entities.DTO.Link_;
 import com.hackro.tutorials.gravility.Entities.ResponseServer;
 import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.Interfaces.IService;
@@ -59,10 +61,57 @@ public class Services implements IService {
         try {
             Call<ResponseServer> call = services.getAlldata();
             Response<ResponseServer> tasks = call.execute();
+            for (Entry entry : tasks.body().getFeed().getEntry()) {
 
 
-            for (Entry temp:tasks.body().getFeed().getEntry()) {
-                Log.e("Apps: ",temp.getCategory().getAttributes().getLabel());
+             /*   Log.e("getCategory ", entry.getCategory().getAttributes().getImId());
+                Log.e("getCategory ", entry.getCategory().getAttributes().getLabel());
+                Log.e("getCategory ", entry.getCategory().getAttributes().getScheme());
+                Log.e("getCategory ", entry.getCategory().getAttributes().getTerm());
+*/
+
+                Log.e("getId ", entry.getId().getLabel().toString());
+                Log.e("getId ", entry.getId().getAttributes().getImId());
+                Log.e("getId ", entry.getId().getAttributes().getImBundleId());
+                Log.e("getImImage ", entry.getImImage().get(0).getLabel());
+                Log.e("getImImage ", entry.getTitle().getLabel());
+                Log.e("getImImage ", entry.getLink().getAttributes().getHref());
+                Log.e("getImImage ", entry.getLink().getAttributes().getRel());
+                Log.e("getImImage ", entry.getLink().getAttributes().getType());
+                Log.e("getImImage ", entry.getImPrice().getAttributes().getAmount());
+                Log.e("getImImage ", entry.getImPrice().getAttributes().getCurrency());
+                Log.e("getImImage ", entry.getImArtist().getAttributes().getHref());
+                Log.e("getImImage ", entry.getImReleaseDate().getAttributes().getLabel());
+                Log.e("getImImage ", entry.getRights().getLabel());
+                Log.e("getImImage ", entry.getSummary().getLabel());
+
+
+
+
+
+
+
+
+
+
+
+
+                Log.e("getImImage ", entry.getImImage().get(0).getLabel());
+                Log.e("getImPrice ", entry.getImPrice().getAttributes().getAmount());
+                Log.e("getLink ", entry.getLink().getAttributes().getHref());
+                Log.e("getTitle ", entry.getTitle().getLabel());
+                Log.e("-----------------------","----------------------");
+                Log.e("-----------------------","----------------------");
+                Log.e("-----------------------","----------------------");
+                Log.e("-----------------------","----------------------");
+
+
+
+            }
+
+
+            for (Entry temp : tasks.body().getFeed().getEntry()) {
+                // Log.e("Apps: ",temp.getCategory().getAttributes().getLabel());
             }
             return true;
         } catch (IOException e) {
