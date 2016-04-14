@@ -1,11 +1,12 @@
 package com.hackro.tutorials.gravility.Entities;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by david on 13/04/16.
  */
-public class Aplicacion {
+public class Aplicacion extends RealmObject {
 
     @PrimaryKey
     private String IdLabel;

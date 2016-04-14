@@ -64,11 +64,12 @@ public class Services implements IService {
             for (Entry entry : tasks.body().getFeed().getEntry()) {
 
 
+
+
              /*   Log.e("getCategory ", entry.getCategory().getAttributes().getImId());
                 Log.e("getCategory ", entry.getCategory().getAttributes().getLabel());
                 Log.e("getCategory ", entry.getCategory().getAttributes().getScheme());
                 Log.e("getCategory ", entry.getCategory().getAttributes().getTerm());
-*/
 
                 Log.e("getId ", entry.getId().getLabel().toString());
                 Log.e("getId ", entry.getId().getAttributes().getImId());
@@ -84,8 +85,7 @@ public class Services implements IService {
                 Log.e("getImImage ", entry.getImReleaseDate().getAttributes().getLabel());
                 Log.e("getImImage ", entry.getRights().getLabel());
                 Log.e("getImImage ", entry.getSummary().getLabel());
-
-
+*/
 
 
 
