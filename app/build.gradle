@@ -31,4 +31,6 @@ dependencies {
     /*Agregamos las dos dependencias CardView y RecyclerView*/
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
 }

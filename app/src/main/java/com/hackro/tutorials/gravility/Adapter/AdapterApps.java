@@ -2,6 +2,7 @@ package com.hackro.tutorials.gravility.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.hackro.tutorials.gravility.Activities.DetailsApp;
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
 import com.hackro.tutorials.gravility.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -25,6 +29,9 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
 
     private List<Aplicacion> appstList;
     private Context context;
+    private Aplicacion ci;
+    private Gson gson;
+    private String myJson;
 
     public AdapterApps() {
     }
@@ -33,6 +40,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
 
         this.appstList = appstList;
         this.context = c;
+        gson = new Gson();
     }
 
 
@@ -45,23 +53,30 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
     @Override
     public void onBindViewHolder(final AppsViewHolder holder, int i) {
 
-        Aplicacion ci = appstList.get(i);
+        ci = appstList.get(i);
 
         holder.txtTitle.setText(ci.getTitle());
         holder.txtPrice.setText(ci.getPriceAmount());
+        //Glide.with(context).load(url).into(holder.iconApp);
 
-        //holder.iconApp.set(ci.getTwitter());
 
         final Aplicacion app = appstList.get(i);
 
+        Glide.with(holder.iconApp.getContext())
+                .load(ci.getImageLabel())
+                .into(holder.iconApp);
 
         holder.card_view_app.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("app  ", app.getTitle());
-                context.startActivity(new Intent(context, DetailsApp.class));
+                Intent intent = new Intent(context, DetailsApp.class);
+                myJson = gson.toJson(ci);
+                intent.putExtra("App", myJson);
+                context.startActivity(intent);
             }
         });
+
 
     }
 
@@ -76,7 +91,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
             super(v);
             txtTitle = (TextView) v.findViewById(R.id.TitleCardView);
             txtPrice = (TextView) v.findViewById(R.id.PriceAmountCardView);
-            iconApp = (ImageView) v.findViewById(R.id.imageView);
+            iconApp = (ImageView) v.findViewById(R.id.IconApp);
             card_view_app = (CardView) v.findViewById(R.id.card_view_app);
         }
     }
