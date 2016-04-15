@@ -35,9 +35,7 @@ public class Splash extends AppCompatActivity {
         progress.setContentView(R.layout.elemento_progress_dialog);
         progress.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-       // new MyAsyncClass().execute();
-        startActivity(new Intent(Splash.this,ListApps.class));
-        finish();
+        new MyAsyncClass().execute();
 
     }
 
@@ -82,5 +80,9 @@ public class Splash extends AppCompatActivity {
         this.realmConfiguration = realmConfiguration;
     }
 
-    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

@@ -28,6 +28,8 @@
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textColor="@color/Text"
+        android:textSize="25dp"
+
         />
     
     <TextView
@@ -36,9 +38,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/TitleApp"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/Text"
+        android:textSize="15dp"
 
         />
     <ScrollView
+        android:layout_marginTop="25dp"
         android:id="@+id/ScrollDetailsApp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
