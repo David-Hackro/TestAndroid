@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
 import com.hackro.tutorials.gravility.Services.Services;
 
@@ -53,11 +55,11 @@ public class Splash extends AppCompatActivity {
 
             service = new Services(realmConfiguration);
             if(service.getAllData()){
-                startActivity(new Intent(Splash.this,ListApps.class));
+                startActivity(new Intent(Splash.this,Categories.class));
                 finish();
             }
             else {
-                startActivity(new Intent(Splash.this,ListApps.class));
+                startActivity(new Intent(Splash.this,Categories.class));
                 finish();
             }
 
