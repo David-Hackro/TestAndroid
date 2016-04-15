@@ -21,7 +21,7 @@ import com.hackro.tutorials.gravility.R;
 
 public class DetailsApp extends AppCompatActivity {
 
-        String Title,ImageLabel,PriceAmount,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
+        String Title,ImageLabel,Category,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
     private TextView PriceApp,DescripcionApp,TitleApp;
 
     @Override
@@ -37,16 +37,11 @@ public class DetailsApp extends AppCompatActivity {
 
         Title = getIntent().getStringExtra("Title");
         ImageLabel = getIntent().getStringExtra("ImageLabel");
-        PriceAmount =getIntent().getStringExtra("PriceAmount");
+        Category =getIntent().getStringExtra("Category");
         SummaryLabel = getIntent().getStringExtra("SummaryLabel");
         ImReleaseDateLabel = getIntent().getStringExtra("ImReleaseDateLabel");
         LinkHref = getIntent().getStringExtra("LinkHref");
         RightsLabel = getIntent().getStringExtra("RightsLabel");
-
-        TitleApp.setText(Title);
-        PriceApp.setText(PriceAmount);
-        DescripcionApp.setText(SummaryLabel);
-
 
         Glide.with(DetailsApp.this).load(getIntent().getStringExtra("ImageLabel")).asBitmap().fitCenter().into(new BitmapImageViewTarget(imageView) {
             @Override
@@ -58,6 +53,10 @@ public class DetailsApp extends AppCompatActivity {
             }
         });
 
+
+        TitleApp.setText(Title);
+        PriceApp.setText(Category);
+        DescripcionApp.setText(SummaryLabel);
 
 
 

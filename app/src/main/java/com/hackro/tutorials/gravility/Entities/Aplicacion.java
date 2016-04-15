@@ -27,6 +27,7 @@ public class Aplicacion extends RealmObject {
     private String ImReleaseDateLabel;
     private String RightsLabel;
     private String SummaryLabel;
+    private String category;
 
     public Aplicacion() {
     }
@@ -141,5 +142,13 @@ public class Aplicacion extends RealmObject {
 
     public void setSummaryLabel(String summaryLabel) {
         SummaryLabel = summaryLabel;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

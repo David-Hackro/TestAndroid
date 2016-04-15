@@ -69,6 +69,7 @@ public class MethodsDataBase implements IMethodsDataBase {
             aplication.setRightsLabel(app.getRightsLabel());
             aplication.setTitle(app.getTitle());
             aplication.setSummaryLabel(app.getSummaryLabel());
+            aplication.setCategory(app.getCategory());
 
 
         } catch (Exception e) {

@@ -91,6 +91,7 @@ public class Services implements IService {
                 app.setImReleaseDateLabel(entry.getImReleaseDate().getAttributes().getLabel());
                 app.setRightsLabel(entry.getRights().getLabel());
                 app.setSummaryLabel(entry.getSummary().getLabel());
+                app.setCategory(entry.getCategory().getAttributes().getLabel());
                 categoria.setImId(entry.getCategory().getAttributes().getImId());
                 categoria.setLabel(entry.getCategory().getAttributes().getLabel());
                 categoria.setScheme( entry.getCategory().getAttributes().getScheme());

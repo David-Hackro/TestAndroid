@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -32,6 +36,8 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
     private Aplicacion ci;
     private Gson gson;
     private String myJson;
+    private int lastPosition;
+    private Animation animation;
 
     public AdapterApps() {
     }
@@ -41,6 +47,10 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
         this.appstList = appstList;
         this.context = c;
         gson = new Gson();
+        lastPosition = appstList.size()-1;
+        animation = AnimationUtils.loadAnimation(context, R.anim.recycler_effect);
+        animation.setDuration(600);
+
     }
 
 
@@ -54,7 +64,6 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
     public void onBindViewHolder(final AppsViewHolder holder, int i) {
 
         ci = appstList.get(i);
-
         holder.txtTitle.setText(ci.getTitle());
         holder.txtPrice.setText(ci.getPriceAmount());
         //Glide.with(context).load(url).into(holder.iconApp);
@@ -66,7 +75,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
                 .load(ci.getImageLabel())
                 .into(holder.iconApp);
 
-        holder.card_view_app.setOnClickListener(new View.OnClickListener() {
+        holder.contentCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("app  ", app.getTitle());
@@ -74,7 +83,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
 
                 intent.putExtra("Title",app.getTitle());
                 intent.putExtra("ImageLabel",app.getImageLabel());
-                intent.putExtra("PriceAmount",app.getPriceAmount());
+                intent.putExtra("Category",app.getCategory());
                 intent.putExtra("SummaryLabel",app.getSummaryLabel());
                 intent.putExtra("ImReleaseDateLabel",app.getImReleaseDateLabel());
                 intent.putExtra("LinkHref",app.getLinkHref());
@@ -86,6 +95,10 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
         });
 
 
+
+        setAnimation(holder.card_view_app, i);
+
+
     }
 
     public static class AppsViewHolder extends RecyclerView.ViewHolder {
@@ -94,15 +107,29 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
         protected TextView txtPrice;
         protected ImageView iconApp;
         protected CardView card_view_app;
-
+        protected RelativeLayout contentCard;
         public AppsViewHolder(View v) {
             super(v);
             txtTitle = (TextView) v.findViewById(R.id.TitleCardView);
             txtPrice = (TextView) v.findViewById(R.id.PriceAmountCardView);
             iconApp = (ImageView) v.findViewById(R.id.IconApp);
             card_view_app = (CardView) v.findViewById(R.id.card_view_app);
+            contentCard = (RelativeLayout)v.findViewById(R.id.CardApp);
         }
     }
+
+
+
+    /**
+     * Here is the key method to apply the animation
+     */
+    private void setAnimation(View viewToAnimate, int position)
+    {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.recycler_effect);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+    }
+
 
     @Override
     public int getItemCount() {
