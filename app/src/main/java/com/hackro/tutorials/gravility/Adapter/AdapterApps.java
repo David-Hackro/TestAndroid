@@ -57,6 +57,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
     @Override
     public AppsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_app, viewGroup, false);
+
         return new AppsViewHolder(itemView);
     }
 

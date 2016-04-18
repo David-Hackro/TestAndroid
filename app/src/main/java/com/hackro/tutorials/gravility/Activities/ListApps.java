@@ -14,12 +14,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
+
 import com.hackro.tutorials.gravility.Adapter.AdapterApps;
 import com.hackro.tutorials.gravility.DataBase.MethodsDataBase;
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
 import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
+import com.hackro.tutorials.gravility.SwipeableRecyclerViewTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,11 @@ public class ListApps extends AppCompatActivity {
     private MethodsDataBase methodsDataBase;
     private String imId;
     private AdapterApps ca;
-    private List<Aplicacion> apps,apps2;
+    private List<Aplicacion> apps, apps2;
     private RealmConfiguration realmConfiguration;
+    private int posicion;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,45 +61,54 @@ public class ListApps extends AppCompatActivity {
         methodsDataBase = new MethodsDataBase(realmConfiguration);
         apps2 = new ArrayList<Aplicacion>();
         apps = (List<Aplicacion>) methodsDataBase.getAllAplicationsCategory(imId);
-        apps2.addAll((List<Aplicacion> )apps);
+        apps2.addAll((List<Aplicacion>) apps);
 
         ca = new AdapterApps(apps2, ListApps.this);
         recList.setAdapter(ca);
 
-            SwipeableRecyclerViewTouchListener swipeTouchListener =
-                    new SwipeableRecyclerViewTouchListener(recList,
-                            new SwipeableRecyclerViewTouchListener.SwipeListener() {
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(recList,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
 
-                                @Override
-                                public boolean canSwipeLeft(int position) {
-                                    return true;
-                                }
+                            @Override
+                            public boolean canSwipeLeft(int position) {
 
-                                @Override
-                                public boolean canSwipeRight(int position) {
-                                    return true;
-                                }
+                                return true;
+                            }
 
-                                @Override
-                                public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
-                                    for (int position : reverseSortedPositions) {
-                                        apps2.remove(position);
-                                        ca.notifyItemRemoved(position);
+                            @Override
+                            public boolean canSwipeRight(int position) {
+                                return true;
+                            }
 
-                                    }
-                                    ca.notifyDataSetChanged();
-                                }
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                startActivity(new Intent(ListApps.this,Categories.class));
 
-                                @Override
-                                public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
-                                    for (int position : reverseSortedPositions) {
-                                        apps2.remove(position);
-                                        ca.notifyItemRemoved(position);
-                                    }
-                                    ca.notifyDataSetChanged();
-                                }
-                            });
 
-            recList.addOnItemTouchListener(swipeTouchListener);
-        }
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                InformationApp(reverseSortedPositions[0]);
+                            }
+                        });
+
+        recList.addOnItemTouchListener(swipeTouchListener);
+    }
+
+    public void InformationApp(int posicion) {
+        Intent intent = new Intent(ListApps.this, DetailsApp.class);
+
+        intent.putExtra("Title", apps2.get(posicion).getTitle());
+        intent.putExtra("ImageLabel", apps2.get(posicion).getImageLabel());
+        intent.putExtra("Category", apps2.get(posicion).getCategory());
+        intent.putExtra("SummaryLabel", apps2.get(posicion).getSummaryLabel());
+        intent.putExtra("ImReleaseDateLabel", apps2.get(posicion).getImReleaseDateLabel());
+        intent.putExtra("LinkHref", apps2.get(posicion).getLinkHref());
+        intent.putExtra("RightsLabel", apps2.get(posicion).getRightsLabel());
+        startActivity(intent);
+
+
+    }
 }
