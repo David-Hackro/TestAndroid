@@ -96,7 +96,7 @@ public class MethodsDataBase implements IMethodsDataBase {
     @Override
     public List<Aplicacion> getAllAplicationsCategory(String c) {
         RealmResults<Aplicacion> result = realm.where(Aplicacion.class).equalTo("IdCategory",c).findAll();
-        return  result;
+        return  (List<Aplicacion>) result;
     }
 
     @Override

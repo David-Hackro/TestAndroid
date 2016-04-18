@@ -2,6 +2,7 @@ package com.hackro.tutorials.gravility.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.hackro.tutorials.gravility.Adapter.AdapterApps;
 import com.hackro.tutorials.gravility.DataBase.MethodsDataBase;
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
@@ -28,25 +30,20 @@ public class ListApps extends AppCompatActivity {
 
     private MethodsDataBase methodsDataBase;
     private String imId;
+    private AdapterApps ca;
+    private List<Aplicacion> apps,apps2;
+    private RealmConfiguration realmConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_apps);
 
-       /* LayoutInflater inf = ((Activity) this).getLayoutInflater();
-        View customView = inf.inflate(R.layout.toolbar, null);
-        Toolbar tolbar = (Toolbar) customView.findViewById(R.id.toolbar);
-        TextView txv = (TextView) customView.findViewById(R.id.txvTituloBarra);
-        txv.setText("Listado Apps");
-
-        setSupportActionBar(tolbar);*/
-
         getSupportActionBar().hide();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        if(bundle != null){
+        if (bundle != null) {
             imId = bundle.getString("imId");
         }
 
@@ -56,21 +53,49 @@ public class ListApps extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(ListApps.this).build();
+        realmConfiguration = new RealmConfiguration.Builder(ListApps.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);
+        apps2 = new ArrayList<Aplicacion>();
+        apps = (List<Aplicacion>) methodsDataBase.getAllAplicationsCategory(imId);
+        apps2.addAll((List<Aplicacion> )apps);
 
-        List<Aplicacion> apps = methodsDataBase.getAllAplicationsCategory(imId);
-
-        AdapterApps ca = new AdapterApps(apps,ListApps.this);
+        ca = new AdapterApps(apps2, ListApps.this);
         recList.setAdapter(ca);
-    }
 
-    public void Categories(View v)
-    {
-    }
+            SwipeableRecyclerViewTouchListener swipeTouchListener =
+                    new SwipeableRecyclerViewTouchListener(recList,
+                            new SwipeableRecyclerViewTouchListener.SwipeListener() {
 
-    public void back(View v)
-    {
-    }
+                                @Override
+                                public boolean canSwipeLeft(int position) {
+                                    return true;
+                                }
 
+                                @Override
+                                public boolean canSwipeRight(int position) {
+                                    return true;
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        apps2.remove(position);
+                                        ca.notifyItemRemoved(position);
+
+                                    }
+                                    ca.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        apps2.remove(position);
+                                        ca.notifyItemRemoved(position);
+                                    }
+                                    ca.notifyDataSetChanged();
+                                }
+                            });
+
+            recList.addOnItemTouchListener(swipeTouchListener);
+        }
 }

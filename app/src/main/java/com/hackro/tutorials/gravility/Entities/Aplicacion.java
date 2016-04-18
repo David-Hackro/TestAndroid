@@ -145,19 +145,19 @@ public class Aplicacion extends RealmObject {
         SummaryLabel = summaryLabel;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getIdCategory() {
         return IdCategory;
     }
 
     public void setIdCategory(String idCategory) {
         IdCategory = idCategory;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

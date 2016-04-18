@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class Categories extends Activity {
     private AbsListView absListView;
     private List<Categoria> categorias;
 
+
     static String[] listItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,13 @@ public class Categories extends Activity {
             i++;
         }
 
+
+
+
         absListView = (AbsListView) findViewById(R.id.listView1);
 
         absListView.setAdapter(new MyArrayAdapter(this, R.layout.row, listItems));
+
     }
 
 
@@ -70,6 +76,7 @@ public class Categories extends Activity {
 
             textView.setText(getItem(position));
 
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -79,6 +86,7 @@ public class Categories extends Activity {
                     startActivity(intent);
                 }
             });
+
 
 
             return view;
