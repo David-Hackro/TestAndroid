@@ -35,6 +35,8 @@ public class ListApps extends AppCompatActivity {
     private List<Aplicacion> apps, apps2;
     private RealmConfiguration realmConfiguration;
     private int posicion;
+    private boolean opcion;
+    private RecyclerView recList;
 
 
 
@@ -42,7 +44,7 @@ public class ListApps extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_apps);
-
+        opcion = true;
         getSupportActionBar().hide();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -51,7 +53,7 @@ public class ListApps extends AppCompatActivity {
             imId = bundle.getString("imId");
         }
 
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardListApps);
+        recList = (RecyclerView) findViewById(R.id.cardListApps);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -92,7 +94,7 @@ public class ListApps extends AppCompatActivity {
                             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 InformationApp(reverseSortedPositions[0]);
                             }
-                        });
+                        },opcion);
 
         recList.addOnItemTouchListener(swipeTouchListener);
     }
@@ -111,4 +113,14 @@ public class ListApps extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onRestart() {
+
+        recList.setAdapter(ca);
+
+
+        super.onRestart();
+    }
+
 }

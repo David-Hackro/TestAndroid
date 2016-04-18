@@ -32,6 +32,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
     private int mMinFlingVelocity;
     private int mMaxFlingVelocity;
     private long mAnimationTime;
+    private boolean eventRight;
 
     // Fixed properties
     private RecyclerView mRecyclerView;
@@ -62,7 +63,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
      * @param recyclerView The recycler view whose items should be dismissable by swiping.
      * @param listener     The listener for the swipe events.
      */
-    public SwipeableRecyclerViewTouchListener(RecyclerView recyclerView, SwipeListener listener) {
+    public SwipeableRecyclerViewTouchListener(RecyclerView recyclerView, SwipeListener listener,boolean option) {
         ViewConfiguration vc = ViewConfiguration.get(recyclerView.getContext());
         mSlop = vc.getScaledTouchSlop();
         mMinFlingVelocity = vc.getScaledMinimumFlingVelocity() * 16;
@@ -71,6 +72,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
                 android.R.integer.config_shortAnimTime);
         mRecyclerView = recyclerView;
         mSwipeListener = listener;
+        eventRight = option;
 
 
         /**
@@ -116,7 +118,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
 
     private boolean handleTouchEvent(MotionEvent motionEvent) {
         if (mViewWidth < 2) {
-            mViewWidth = mRecyclerView.getWidth();
+            mViewWidth = mRecyclerView.getWidth() -  (mRecyclerView.getWidth() / 2);
         }
 
         switch (motionEvent.getActionMasked()) {
@@ -213,7 +215,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
                     ViewCompat.animate(mDownView)
                             .translationX(dismissRight ? mViewWidth : -mViewWidth)
                             .alpha(0)
-                            .setDuration(mAnimationTime)
+                            .setDuration(mAnimationTime*2)
                             .setListener(new ViewPropertyAnimatorListener() {
                                 @Override
                                 public void onAnimationStart(View view) {
@@ -318,6 +320,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
                     mDownPosition = ListView.INVALID_POSITION;
 
                     ViewGroup.LayoutParams lp;
+                    /*if(!eventRight){
                     for (PendingDismissData pendingDismiss : mPendingDismisses) {
                         // Reset view presentation
                         pendingDismiss.view.setAlpha(mAlpha);
@@ -328,6 +331,7 @@ public class SwipeableRecyclerViewTouchListener implements RecyclerView.OnItemTo
 
                         pendingDismiss.view.setLayoutParams(lp);
                     }
+                    }*/
 
                     // Send a cancel event
                     long time = SystemClock.uptimeMillis();
