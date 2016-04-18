@@ -37,7 +37,7 @@ public class Categories extends Activity {
         methodsDataBase = new MethodsDataBase(realmConfiguration);
 
         List<Categoria> categorias = methodsDataBase.getAllCategories();
-        listItems = new String[categorias.size()-1];
+        listItems = new String[categorias.size()];
         int i = 0;
         for (Categoria cc : categorias) {
             listItems[i] = cc.getLabel();

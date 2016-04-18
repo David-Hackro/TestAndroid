@@ -15,6 +15,7 @@ public interface IMethodsDataBase {
     List<Categoria> getAllCategories();
     List<Aplicacion> getAllAplications();
     Aplicacion getApplication(String idApp);
+    Categoria ExisteCategoria(Categoria c);
 
 
 }

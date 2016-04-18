@@ -31,22 +31,24 @@ public class MethodsDataBase implements IMethodsDataBase {
 
     @Override
     public void InsertCategory(Categoria c) {
-        try {
-            realm.beginTransaction();
-            category = realm.createObject(Categoria.class);
 
-            category.setImId(c.getImId());
-            category.setLabel(c.getLabel());
-            category.setScheme(c.getScheme());
-            category.setTerm(c.getTerm());
+        try {
+            if (ExisteCategoria(c) ==  null) {
+                realm.beginTransaction();
+                category = realm.createObject(Categoria.class);
+                category.setImId(c.getImId());
+                category.setLabel(c.getLabel());
+                category.setScheme(c.getScheme());
+                category.setTerm(c.getTerm());
+                realm.commitTransaction();
+            }
 
         } catch (Exception e) {
-            Log.e("Existe", "");
-
-        } finally {
             realm.commitTransaction();
+            Log.e("Existe", e.getMessage());
         }
     }
+
 
     @Override
     public void InsertAplication(Aplicacion app) {
@@ -70,14 +72,12 @@ public class MethodsDataBase implements IMethodsDataBase {
             aplication.setTitle(app.getTitle());
             aplication.setSummaryLabel(app.getSummaryLabel());
             aplication.setCategory(app.getCategory());
-
+            realm.commitTransaction();
 
         } catch (Exception e) {
             Log.e("Error", "");
-
-        } finally {
-            realm.commitTransaction();
         }
+
     }
 
     @Override
@@ -95,5 +95,10 @@ public class MethodsDataBase implements IMethodsDataBase {
     @Override
     public Aplicacion getApplication(String idApp) {
         return realm.where(Aplicacion.class).equalTo("idApp", idApp).findFirst();
+    }
+
+    @Override
+    public Categoria ExisteCategoria(Categoria c) {
+        return realm.where(Categoria.class).equalTo("ImId", c.getImId()).findFirst();
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hackro.tutorials.gravility.Adapter.AdapterApps;
 import com.hackro.tutorials.gravility.DataBase.MethodsDataBase;
 import com.hackro.tutorials.gravility.Entities.Aplicacion;
+import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
 
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class ListApps extends AppCompatActivity {
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(ListApps.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);
+
+        List<Categoria> cccc = methodsDataBase.getAllCategories();
 
         List<Aplicacion> apps = methodsDataBase.getAllAplications();
         AdapterApps ca = new AdapterApps(apps,ListApps.this);
