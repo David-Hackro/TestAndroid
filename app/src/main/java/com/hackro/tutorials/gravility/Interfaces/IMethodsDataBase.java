@@ -14,6 +14,7 @@ public interface IMethodsDataBase {
     void InsertAplication(Aplicacion aplicacion);
     List<Categoria> getAllCategories();
     List<Aplicacion> getAllAplications();
+    List<Aplicacion> getAllAplicationsCategory(String c);
     Aplicacion getApplication(String idApp);
     Categoria ExisteCategoria(Categoria c);
 

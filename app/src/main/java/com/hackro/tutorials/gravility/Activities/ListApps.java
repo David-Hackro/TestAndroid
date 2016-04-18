@@ -1,6 +1,7 @@
 package com.hackro.tutorials.gravility.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import io.realm.RealmConfiguration;
 public class ListApps extends AppCompatActivity {
 
     private MethodsDataBase methodsDataBase;
+    private String imId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,12 @@ public class ListApps extends AppCompatActivity {
         setSupportActionBar(tolbar);*/
 
         getSupportActionBar().hide();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if(bundle != null){
+            imId = bundle.getString("imId");
+        }
 
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardListApps);
         recList.setHasFixedSize(true);
@@ -51,9 +59,8 @@ public class ListApps extends AppCompatActivity {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(ListApps.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);
 
-        List<Categoria> cccc = methodsDataBase.getAllCategories();
+        List<Aplicacion> apps = methodsDataBase.getAllAplicationsCategory(imId);
 
-        List<Aplicacion> apps = methodsDataBase.getAllAplications();
         AdapterApps ca = new AdapterApps(apps,ListApps.this);
         recList.setAdapter(ca);
     }

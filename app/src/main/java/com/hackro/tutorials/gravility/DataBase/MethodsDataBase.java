@@ -72,6 +72,7 @@ public class MethodsDataBase implements IMethodsDataBase {
             aplication.setTitle(app.getTitle());
             aplication.setSummaryLabel(app.getSummaryLabel());
             aplication.setCategory(app.getCategory());
+            aplication.setIdCategory(app.getIdCategory());
             realm.commitTransaction();
 
         } catch (Exception e) {
@@ -90,6 +91,12 @@ public class MethodsDataBase implements IMethodsDataBase {
     public List<Aplicacion> getAllAplications() {
         RealmResults<Aplicacion> result = realm.where(Aplicacion.class).findAll();
         return result;
+    }
+
+    @Override
+    public List<Aplicacion> getAllAplicationsCategory(String c) {
+        RealmResults<Aplicacion> result = realm.where(Aplicacion.class).equalTo("IdCategory",c).findAll();
+        return  result;
     }
 
     @Override

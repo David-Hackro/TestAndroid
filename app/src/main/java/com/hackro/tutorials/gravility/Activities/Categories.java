@@ -25,6 +25,7 @@ public class Categories extends Activity {
     private MethodsDataBase methodsDataBase;
 
     private AbsListView absListView;
+    private List<Categoria> categorias;
 
     static String[] listItems;
 
@@ -36,7 +37,7 @@ public class Categories extends Activity {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Categories.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);
 
-        List<Categoria> categorias = methodsDataBase.getAllCategories();
+        categorias = methodsDataBase.getAllCategories();
         listItems = new String[categorias.size()];
         int i = 0;
         for (Categoria cc : categorias) {
@@ -70,9 +71,9 @@ public class Categories extends Activity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(Categories.this, "posicion " + position, Toast.LENGTH_LONG).show();
+                    ///Toast.makeText(Categories.this, "posicion " + position, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Categories.this, ListApps.class);
-                    intent.putExtra("idCategory", 1);
+                    intent.putExtra("imId", categorias.get(position).getImId());
                     startActivity(intent);
                 }
             });
