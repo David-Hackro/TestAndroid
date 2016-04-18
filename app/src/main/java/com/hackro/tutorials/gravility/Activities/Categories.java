@@ -1,14 +1,18 @@
 package com.hackro.tutorials.gravility.Activities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-
-import com.hackro.tutorials.gravility.Adapter.AdapterCategories;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.hackro.tutorials.gravility.DataBase.MethodsDataBase;
-import com.hackro.tutorials.gravility.Entities.Aplicacion;
 import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
 
@@ -16,26 +20,65 @@ import java.util.List;
 
 import io.realm.RealmConfiguration;
 
-public class Categories extends AppCompatActivity {
 
+public class Categories extends Activity {
     private MethodsDataBase methodsDataBase;
+
+    private AbsListView absListView;
+
+    static String[] listItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Categories.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);
 
         List<Categoria> categorias = methodsDataBase.getAllCategories();
+        listItems = new String[categorias.size()-1];
+        int i = 0;
+        for (Categoria cc : categorias) {
+            listItems[i] = cc.getLabel();
+            i++;
+        }
 
-        RecyclerView recList = (RecyclerView) findViewById(R.id.ListCategories);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
+        absListView = (AbsListView) findViewById(R.id.listView1);
+
+        absListView.setAdapter(new MyArrayAdapter(this, R.layout.row, listItems));
+    }
 
 
-        AdapterCategories ca = new AdapterCategories(categorias,Categories.this);
-        recList.setAdapter(ca);
+    private class MyArrayAdapter extends ArrayAdapter<String> {
+
+        public MyArrayAdapter(Context context, int resource,
+                              String[] values) {
+            super(context, resource, values);
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) getContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.row, parent, false);
+            TextView textView = (TextView) view.findViewById(R.id.textView1);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView1);
+
+            textView.setText(getItem(position));
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(Categories.this, "posicion " + position, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Categories.this, ListApps.class);
+                    intent.putExtra("idCategory", 1);
+                    startActivity(intent);
+                }
+            });
+
+
+            return view;
+        }
     }
 }
