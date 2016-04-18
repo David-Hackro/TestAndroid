@@ -10,7 +10,7 @@
 
 
     <string name="tituloApp">Nombre:</string>
-    <string name="PrecioApp">Precio:</string>
+    <string name="PrecioApp">Date: </string>
 
 
 </resources>

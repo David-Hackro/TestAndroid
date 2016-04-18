@@ -23,12 +23,24 @@ public class DetailsApp extends AppCompatActivity {
 
         String Title,ImageLabel,Category,SummaryLabel,ImReleaseDateLabel,LinkHref,RightsLabel;
     private TextView PriceApp,DescripcionApp,TitleApp;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_app);
-        final ImageView imageView = (ImageView) findViewById(R.id.IconApp);
+        imageView = (ImageView) findViewById(R.id.IconApp);
+
+        Glide.with(DetailsApp.this).load(getIntent().getStringExtra("ImageLabel")).asBitmap().fitCenter().into(new BitmapImageViewTarget(imageView) {
+
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(DetailsApp.this.getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                imageView.setImageDrawable(circularBitmapDrawable);
+            }
+        });
 
         TitleApp =(TextView)findViewById(R.id.TitleApp);
         PriceApp = (TextView)findViewById(R.id.PriceApp);
@@ -43,15 +55,7 @@ public class DetailsApp extends AppCompatActivity {
         LinkHref = getIntent().getStringExtra("LinkHref");
         RightsLabel = getIntent().getStringExtra("RightsLabel");
 
-        Glide.with(DetailsApp.this).load(getIntent().getStringExtra("ImageLabel")).asBitmap().fitCenter().into(new BitmapImageViewTarget(imageView) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(DetailsApp.this.getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageView.setImageDrawable(circularBitmapDrawable);
-            }
-        });
+
 
 
         TitleApp.setText(Title);

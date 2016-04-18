@@ -3,6 +3,7 @@ package com.hackro.tutorials.gravility.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
 
 import java.util.List;
+import java.util.Random;
 
 import io.realm.RealmConfiguration;
 
@@ -28,11 +30,11 @@ public class Categories extends Activity {
     private List<Categoria> categorias;
 
     static String[] listItems;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(Categories.this).build();
         methodsDataBase = new MethodsDataBase(realmConfiguration);

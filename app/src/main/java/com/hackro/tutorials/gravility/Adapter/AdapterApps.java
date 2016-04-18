@@ -65,7 +65,7 @@ public class AdapterApps extends RecyclerView.Adapter<AdapterApps.AppsViewHolder
 
         ci = appstList.get(i);
         holder.txtTitle.setText(ci.getTitle());
-        holder.txtPrice.setText(ci.getPriceAmount());
+        holder.txtPrice.setText(ci.getImReleaseDateLabel());
         //Glide.with(context).load(url).into(holder.iconApp);
 
 

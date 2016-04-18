@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="com.hackro.tutorials.gravility.Activities.DetailsApp">
+
+
+    <ImageView
+        android:id="@+id/IconApp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"
+        android:onClick="download"
+        />
+
+
+    <TextView
+        android:id="@+id/TitleApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/IconApp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/Text"
+        android:textSize="25dp"
+        android:textAlignment="center"
+
+
+
+        />
+
+    <TextView
+        android:id="@+id/PriceApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TitleApp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/Text"
+        android:textSize="15dp"
+        android:textAlignment="center"
+
+
+
+        />
+    <ScrollView
+        android:layout_marginTop="5dp"
+        android:id="@+id/ScrollDetailsApp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/PriceApp"
+        android:layout_centerHorizontal="true"
+
+        >
+    <TextView
+        android:id="@+id/DescripcionApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="@color/secundaryText"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+
+        />
+    </ScrollView>
+
+
+</RelativeLayout>
