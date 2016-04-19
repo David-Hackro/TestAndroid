@@ -11,6 +11,7 @@
 
     <string name="tituloApp">Nombre:</string>
     <string name="PrecioApp">Date: </string>
-
+    <string name="Online">Online</string>
+    <string name="Offline">Offline</string>
 
 </resources>

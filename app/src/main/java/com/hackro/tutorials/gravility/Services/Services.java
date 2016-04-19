@@ -14,6 +14,7 @@ import com.hackro.tutorials.gravility.Entities.DTO.Entry;
 import com.hackro.tutorials.gravility.Entities.ResponseServer;
 import com.hackro.tutorials.gravility.Interfaces.IRepoData;
 import com.hackro.tutorials.gravility.Interfaces.IService;
+import com.hackro.tutorials.gravility.Utilidades.Utilidades;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,9 @@ public class Services implements IService {
     private Retrofit retrofit;
     private IRepoData services;
     private MethodsDataBase methodsDataBase;
+    private Utilidades utilidades;
 
     public Services(RealmConfiguration realmConfig) {
-
         methodsDataBase = new MethodsDataBase(realmConfig);
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
@@ -64,6 +65,8 @@ public class Services implements IService {
 
     @Override
     public boolean getAllData() {
+
+
         try {
             Call<ResponseServer> call = services.getAlldata();
             Response<ResponseServer> tasks = call.execute();

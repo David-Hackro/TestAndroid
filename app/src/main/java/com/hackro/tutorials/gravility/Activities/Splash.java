@@ -7,10 +7,12 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.hackro.tutorials.gravility.Entities.Categoria;
 import com.hackro.tutorials.gravility.R;
 import com.hackro.tutorials.gravility.Services.Services;
+import com.hackro.tutorials.gravility.Utilidades.Utilidades;
 
 import io.realm.RealmConfiguration;
 
@@ -19,6 +21,7 @@ public class Splash extends AppCompatActivity {
     private ProgressDialog progress;
     private Services service;
     private RealmConfiguration realmConfiguration;
+    private Utilidades utilidades;
 
 
     @Override
@@ -26,6 +29,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+        utilidades = new Utilidades(Splash.this);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -54,16 +58,32 @@ public class Splash extends AppCompatActivity {
             realmConfiguration = new RealmConfiguration.Builder(Splash.this).build();
 
             service = new Services(realmConfiguration);
-            if(service.getAllData()){
-                startActivity(new Intent(Splash.this,Categories.class));
-                finish();
-            }
-            else {
-                startActivity(new Intent(Splash.this,Categories.class));
-                finish();
-            }
+            if (utilidades.isNetworkAvailable()) {
+                if (service.getAllData()) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(Splash.this, getResources().getString(R.string.Online), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
+                } else {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(Splash.this, getResources().getString(R.string.Offline), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            } else {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(Splash.this, getResources().getString(R.string.Offline), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
             return null;
+
         }
 
         @Override
@@ -71,6 +91,10 @@ public class Splash extends AppCompatActivity {
             super.onPostExecute(result);
 
             progress.dismiss();
+
+            startActivity(new Intent(Splash.this, Categories.class));
+            finish();
+
         }
     }
 
